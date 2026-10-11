@@ -1,0 +1,76 @@
+{
+  "name": "claude-explain",
+  "displayName": "Claude Explain",
+  "description": "Hover over highlighted code to get a Claude Code explanation of what it does and how it fits the program.",
+  "version": "0.1.0",
+  "publisher": "cscaff",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "claudeExplain.explainSelection",
+        "title": "Claude Explain: Explain Selection"
+      },
+      {
+        "command": "claudeExplain.clearCache",
+        "title": "Claude Explain: Clear Cache"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "claudeExplain.explainSelection",
+        "key": "ctrl+alt+e",
+        "mac": "cmd+alt+e",
+        "when": "editorHasSelection"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "claudeExplain.explainSelection",
+          "when": "editorHasSelection",
+          "group": "navigation@99"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Claude Explain",
+      "properties": {
+        "claudeExplain.claudePath": {
+          "type": "string",
+          "default": "",
+          "description": "Path to the claude CLI. Empty: ~/.local/bin/claude if it exists, else `claude` on PATH."
+        },
+        "claudeExplain.model": {
+          "type": "string",
+          "default": "haiku",
+          "description": "Model alias or id passed to `claude --model` (haiku is fastest; sonnet or opus explain more carefully)."
+        },
+        "claudeExplain.explainOnHover": {
+          "type": "boolean",
+          "default": true,
+          "description": "Explain automatically when you hover inside a selection. Off: only the command / keybinding explains."
+        },
+        "claudeExplain.maxFileChars": {
+          "type": "number",
+          "default": 60000,
+          "description": "Longer files are sent as a window around the selection, not whole."
+        }
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cscaff/claude-explain"
+  }
+}
